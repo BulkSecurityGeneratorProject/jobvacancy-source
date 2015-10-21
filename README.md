@@ -12,3 +12,7 @@
 ## Travis Link:
 
 [![Build Status](https://travis-ci.org/etermin/jobvacancy-source.svg)](https://travis-ci.org/etermin/jobvacancy-source)
+
+## Backlog Link:
+
+* [https://trello.com/b/R3LLITED/jobvacancy](https://trello.com/b/R3LLITED/jobvacancy)
