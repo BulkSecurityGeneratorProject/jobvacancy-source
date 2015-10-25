@@ -1,5 +1,5 @@
 
-<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+<form name="form" role="form" novalidate ng-submit="save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -19,22 +19,33 @@
             <input type="text" class="form-control" name="fullname" id="field_fullname"
                     ng-model="jobApplication.fullname"
                     required>
-            <div ng-show="editForm.fullname.$invalid">
+            <div ng-show="form.fullname.$dirty && form.fullname.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.fullname.$error.required">
+                    ng-show="form.fullname.$error.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label for="field_email">Your Email</label>
-            <input type="text" class="form-control" name="location" id="field_email"
-                    ng-model="jobApplication.email"
-                    required>
-            <div ng-show="editForm.email.$invalid">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Your e-mail"
+                   ng-model="jobApplication.email" ng-minlength=5 ng-maxlength=100 required maxlength="100">
+            <div ng-show="form.email.$dirty && form.email.$invalid">
                 <p class="help-block"
-                   ng-show="editForm.email.$error.required">
-                    This field is required.
+                       ng-show="form.email.$error.required">
+                    Your e-mail is required.
+                </p>
+                <p class="help-block"
+                       ng-show="form.email.$error.email">
+                    Your e-mail is invalid.
+                </p>
+                <p class="help-block"
+                       ng-show="form.email.$error.minlength">
+                    Your e-mail is required to be at least 5 characters.
+                </p>
+                <p class="help-block"
+                       ng-show="form.email.$error.maxlength">
+                    Your e-mail cannot be longer than 100 characters.
                 </p>
             </div>
         </div>
@@ -44,7 +55,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+        <button type="submit" ng-disabled="form.$invalid || form.$submitted" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Apply</span>
         </button>
     </div>
