@@ -1,14 +1,10 @@
 package com.jobvacancy.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.jobvacancy.domain.JobOffer;
-import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.JobOfferRepository;
-import com.jobvacancy.repository.UserRepository;
-import com.jobvacancy.security.SecurityUtils;
-import com.jobvacancy.service.MailService;
-import com.jobvacancy.web.rest.dto.JobApplicationDTO;
-import com.jobvacancy.web.rest.util.HeaderUtil;
+import java.net.URISyntaxException;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -18,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+import com.jobvacancy.domain.JobOffer;
+import com.jobvacancy.domain.util.FieldValidator;
+import com.jobvacancy.repository.JobOfferRepository;
+import com.jobvacancy.service.MailService;
+import com.jobvacancy.web.rest.dto.JobApplicationDTO;
+import com.jobvacancy.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -43,8 +41,11 @@ public class JobApplicationResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<JobOffer> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
+    public ResponseEntity<?> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
         log.debug("REST request to save JobApplication : {}", jobApplication);
+        if(!FieldValidator.validateEmail(jobApplication.getEmail())){
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Invalid e-mail");
+        }
         JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
         this.mailService.sendApplication(jobApplication.getEmail(), jobOffer);
 
