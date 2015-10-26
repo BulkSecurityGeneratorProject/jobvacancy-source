@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('jobvacancyApp').controller('JobOfferDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'JobOffer', 'User',
-        function($scope, $stateParams, $modalInstance, entity, JobOffer, User) {
+    ['$scope', '$stateParams', '$modalInstance', 'entity', 'JobOffer', 'User', 'copy',
+        function($scope, $stateParams, $modalInstance, entity, JobOffer, User, copy) {
 
         $scope.jobOffer = entity;
         $scope.users = User.query();
@@ -18,6 +18,9 @@ angular.module('jobvacancyApp').controller('JobOfferDialogController',
         };
 
         $scope.save = function () {
+            if (copy) {
+                $scope.jobOffer.id = null;
+            }
             if ($scope.jobOffer.id != null) {
                 JobOffer.update($scope.jobOffer, onSaveFinished);
             } else {
