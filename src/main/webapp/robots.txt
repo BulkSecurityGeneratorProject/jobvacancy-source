@@ -6,6 +6,7 @@ Disallow: /api/account/change_password
 Disallow: /api/account/sessions
 Disallow: /api/audits/
 Disallow: /api/logs/
+Disallow: /api/info/
 Disallow: /api/users/
 Disallow: /metrics/
 Disallow: /health/
