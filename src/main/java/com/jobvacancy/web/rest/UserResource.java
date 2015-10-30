@@ -1,16 +1,14 @@
 package com.jobvacancy.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.jobvacancy.domain.Authority;
-import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.AuthorityRepository;
-import com.jobvacancy.repository.UserRepository;
-import com.jobvacancy.security.AuthoritiesConstants;
-import com.jobvacancy.service.UserService;
-import com.jobvacancy.web.rest.dto.ManagedUserDTO;
-import com.jobvacancy.web.rest.dto.UserDTO;
-import com.jobvacancy.web.rest.util.HeaderUtil;
-import com.jobvacancy.web.rest.util.PaginationUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,13 +19,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.codahale.metrics.annotation.Timed;
+import com.jobvacancy.domain.Authority;
+import com.jobvacancy.domain.User;
+import com.jobvacancy.repository.AuthorityRepository;
+import com.jobvacancy.repository.UserRepository;
+import com.jobvacancy.security.AuthoritiesConstants;
+import com.jobvacancy.service.UserService;
+import com.jobvacancy.web.rest.dto.ManagedUserDTO;
+import com.jobvacancy.web.rest.util.HeaderUtil;
+import com.jobvacancy.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing users.

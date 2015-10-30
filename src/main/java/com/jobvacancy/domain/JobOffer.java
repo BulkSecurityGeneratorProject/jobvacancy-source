@@ -18,6 +18,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 /**
  * A JobOffer.
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "JOB_OFFER")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

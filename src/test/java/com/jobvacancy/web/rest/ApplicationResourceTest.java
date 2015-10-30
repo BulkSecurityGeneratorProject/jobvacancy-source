@@ -1,19 +1,20 @@
 package com.jobvacancy.web.rest;
 
-import com.jobvacancy.Application;
-import com.jobvacancy.domain.JobOffer;
-import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.JobOfferRepository;
-import com.jobvacancy.repository.UserRepository;
-import com.jobvacancy.service.MailService;
-import com.jobvacancy.web.rest.dto.JobApplicationDTO;
-import org.assertj.core.api.StrictAssertions;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.matchers.Any;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -23,18 +24,14 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import scala.App;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-import static org.springframework.mock.staticmock.AnnotationDrivenStaticEntityMockingControl.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.jobvacancy.Application;
+import com.jobvacancy.domain.JobOffer;
+import com.jobvacancy.domain.User;
+import com.jobvacancy.repository.JobOfferRepository;
+import com.jobvacancy.repository.UserRepository;
+import com.jobvacancy.service.MailService;
+import com.jobvacancy.web.rest.dto.JobApplicationDTO;
 
 /**
  * Created by nicopaez on 10/11/15.

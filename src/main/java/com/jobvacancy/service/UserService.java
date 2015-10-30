@@ -1,13 +1,12 @@
 package com.jobvacancy.service;
 
-import com.jobvacancy.domain.Authority;
-import com.jobvacancy.domain.PersistentToken;
-import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.AuthorityRepository;
-import com.jobvacancy.repository.PersistentTokenRepository;
-import com.jobvacancy.repository.UserRepository;
-import com.jobvacancy.security.SecurityUtils;
-import com.jobvacancy.service.util.RandomUtil;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -17,11 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import com.jobvacancy.domain.Authority;
+import com.jobvacancy.domain.User;
+import com.jobvacancy.repository.AuthorityRepository;
+import com.jobvacancy.repository.PersistentTokenRepository;
+import com.jobvacancy.repository.UserRepository;
+import com.jobvacancy.security.SecurityUtils;
+import com.jobvacancy.service.util.RandomUtil;
 
 /**
  * Service class for managing users.
