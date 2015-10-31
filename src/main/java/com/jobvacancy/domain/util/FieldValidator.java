@@ -1,7 +1,9 @@
 package com.jobvacancy.domain.util;
 
 import java.util.regex.Matcher;
+
 import java.util.regex.Pattern;
+
 
 public class FieldValidator {
 
@@ -11,8 +13,13 @@ public class FieldValidator {
 	public static boolean validateEmail(String email) {
 
 		Pattern pattern = Pattern.compile(REGULAR_EXPRESSION_EMAIL);
-
-		Matcher matcher = pattern.matcher(email.toLowerCase());
-		return matcher.matches();
+		
+		if(email != null){
+			
+			Matcher matcher = pattern.matcher(email.toLowerCase());
+			return matcher.matches();
+		}else{
+			return false;
+		}
 	}
 }

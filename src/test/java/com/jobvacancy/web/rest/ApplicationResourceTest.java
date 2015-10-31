@@ -42,7 +42,8 @@ import com.jobvacancy.web.rest.dto.JobApplicationDTO;
 @IntegrationTest
 public class ApplicationResourceTest {
 
-    private static final String APPLICANT_FULLNAME = "THE APPLICANT";
+    private static final String APPLICANT_BAD_EMAIL = "test1()@pepe.com.";
+	private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
     private MockMvc restMockMvc;
 
@@ -78,6 +79,40 @@ public class ApplicationResourceTest {
 
         this.restMockMvc = MockMvcBuilders.standaloneSetup(jobApplicationResource)
             .setMessageConverters(jacksonMessageConverter).build();
+    }
+    
+    @Test
+    @Transactional
+    public void createJobApplicationWithoutEmail() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(null);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setOfferId(OFFER_ID);
+
+        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
+        doNothing().when(mailService).sendApplication(null, offer);
+
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void createJobApplicationWithBadEmail() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(APPLICANT_BAD_EMAIL);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setOfferId(OFFER_ID);
+
+        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
+        doNothing().when(mailService).sendApplication(APPLICANT_BAD_EMAIL, offer);
+
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

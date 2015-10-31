@@ -24,7 +24,7 @@ public class FieldValidatorTest {
 	@Test
 	public void whenVerifyAInvalidEmailThenResultIsFalse() {
 
-		String[] invalidEmails = new String[] { "example", "example@.com.com", "exampel1@.com", ".example@test.com",
+		String[] invalidEmails = new String[] { "example", "", "example@.com.com", "exampel1@.com", ".example@test.com",
 				"example**()@test.com", "example@%*.com", "example..1@test.com", "example.@test.com",
 				"test@example_1.com", "example@test@test.com", "example@test.com.a5" };
 
