@@ -19,4 +19,4 @@
 
 ## Jenkins Link:
 
-* [![Build Status](http://192.241.213.91:8080/view/untref/job/etermin/)](http://192.241.213.91:8080/view/untref/job/etermin/)
+* [http://192.241.213.91:8080/view/untref/job/etermin/](http://192.241.213.91:8080/view/untref/job/etermin/)
