@@ -16,3 +16,7 @@
 ## Backlog Link:
 
 * [https://trello.com/b/R3LLITED/jobvacancy](https://trello.com/b/R3LLITED/jobvacancy)
+
+## Jenkins Link:
+
+* [http://192.241.213.91:8080/view/untref/job/etermin/](http://192.241.213.91:8080/view/untref/job/etermin/)
