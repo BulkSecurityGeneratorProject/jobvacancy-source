@@ -33,4 +33,14 @@ public class JobApplicationDTO {
     }
 
     private String email;
+    
+    public String getCVLink() {
+        return cvLink;
+    }
+
+    public void setCVLink(String cvLink) {
+        this.cvLink = cvLink;
+    }
+
+    private String cvLink;
 }

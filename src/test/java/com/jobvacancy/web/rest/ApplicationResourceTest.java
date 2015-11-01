@@ -45,6 +45,7 @@ public class ApplicationResourceTest {
     private static final String APPLICANT_BAD_EMAIL = "test1()@pepe.com.";
 	private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
+    private static final String APPLICANT_CV_LINK = "CVLINK";
     private MockMvc restMockMvc;
 
     private static final long OFFER_ID = 1;
@@ -121,6 +122,7 @@ public class ApplicationResourceTest {
         JobApplicationDTO dto = new JobApplicationDTO();
         dto.setEmail(APPLICANT_EMAIL);
         dto.setFullname(APPLICANT_FULLNAME);
+        dto.setCVLink(APPLICANT_CV_LINK);
         dto.setOfferId(OFFER_ID);
 
         //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
