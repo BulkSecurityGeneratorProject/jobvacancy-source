@@ -33,4 +33,28 @@ public class FieldValidatorTest {
 			Assert.assertFalse(isValid);
 		}
 	}
+	
+	@Test
+	public void whenVerifyAValidUrlThenResultIsTrue() {
+
+		String[] validUrls = new String[] { "https://www.google.com", "https://www.google.com/test", 
+				"https://www.google.com/#$&$%&%/$", "https://www.test.com"};
+
+		for (String validUrl : validUrls) {
+			boolean isValid = FieldValidator.validateUrl(validUrl);
+			Assert.assertTrue(isValid);
+		}
+	}
+	
+	@Test
+	public void whenVerifyAValidUrlThenResultIsFalse() {
+
+		String[] validUrls = new String[] { "https://www.google.com", "https://www.google.com/test", 
+				"https://www.google.com/#$&$%&%/$", "https://www.test.com"};
+
+		for (String validUrl : validUrls) {
+			boolean isInvalid = FieldValidator.validateUrl(validUrl);
+			Assert.assertTrue(isInvalid);
+		}
+	}
 }
