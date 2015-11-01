@@ -46,8 +46,11 @@ public class JobApplicationResource {
         if(!FieldValidator.validateEmail(jobApplication.getEmail())){
         	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Invalid e-mail");
         }
+        if(jobApplication.getCVLink() == null){
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Blank CV Link");
+        }
         JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
-        this.mailService.sendApplication(jobApplication.getEmail(), jobOffer);
+        this.mailService.sendApplication(jobApplication, jobOffer);
 
         return ResponseEntity.accepted()
             .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
