@@ -26,7 +26,7 @@ public class FieldValidatorTest {
 
 		String[] invalidEmails = new String[] { "example", "", "example@.com.com", "exampel1@.com", 
 				"example**()@test.com", "example@%*.com","example.(.1@test.com","test@example_=1.com",
-				"example@test@test.com", "example@&%#$%.c", "example@asd." };
+				"example@test@test.com", "example@&%#$%.c", "example@asd.", null };
 
 		for (String invalidEmail : invalidEmails) {
 			boolean isValid = FieldValidator.validateEmail(invalidEmail);
@@ -38,7 +38,7 @@ public class FieldValidatorTest {
 	public void whenVerifyAValidUrlThenResultIsTrue() {
 
 		String[] validUrls = new String[] { "https://www.google.com", "https://www.google.com/test", 
-				"https://www.google.com/#$&$%&%/$", "https://www.test.com"};
+				"https://www.google.com/#$&$%&%/$", "https://www.test.com", "http://www.google.com"};
 
 		for (String validUrl : validUrls) {
 			boolean isValid = FieldValidator.validateUrl(validUrl);
@@ -49,12 +49,12 @@ public class FieldValidatorTest {
 	@Test
 	public void whenVerifyAValidUrlThenResultIsFalse() {
 
-		String[] validUrls = new String[] { "https://www.google.com", "https://www.google.com/test", 
-				"https://www.google.com/#$&$%&%/$", "https://www.test.com"};
+		String[] validUrls = new String[] { "google.com", "http:test/test", 
+				"www.google.com/#$&$%&%/$", "https:%$//w&ww.test.com", null};
 
 		for (String validUrl : validUrls) {
 			boolean isInvalid = FieldValidator.validateUrl(validUrl);
-			Assert.assertTrue(isInvalid);
+			Assert.assertFalse(isInvalid);
 		}
 	}
 }

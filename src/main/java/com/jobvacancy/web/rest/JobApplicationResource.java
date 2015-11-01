@@ -43,10 +43,10 @@ public class JobApplicationResource {
     @Timed
     public ResponseEntity<?> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
         log.debug("REST request to save JobApplication : {}", jobApplication);
-        if(!FieldValidator.validateEmail(jobApplication.getEmail())){
+        if(validateEmail(jobApplication)){
         	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Invalid e-mail");
         }
-        if(jobApplication.getCVLink() == null){
+        if(validateUrl(jobApplication)){
         	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Blank CV Link");
         }
         JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
@@ -55,4 +55,12 @@ public class JobApplicationResource {
         return ResponseEntity.accepted()
             .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
     }
+
+	private boolean validateUrl(JobApplicationDTO jobApplication) {
+		return !FieldValidator.validateUrl(jobApplication.getCVLink());
+	}
+
+	private boolean validateEmail(JobApplicationDTO jobApplication) {
+		return !FieldValidator.validateEmail(jobApplication.getEmail());
+	}
 }

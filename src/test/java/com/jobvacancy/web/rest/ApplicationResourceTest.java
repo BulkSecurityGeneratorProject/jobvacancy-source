@@ -44,7 +44,7 @@ public class ApplicationResourceTest {
     private static final String APPLICANT_BAD_EMAIL = "test1()@pepe.com.";
 	private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
-    private static final String APPLICANT_CV_LINK = "CV LINK";
+    private static final String APPLICANT_CV_LINK = "http://www.linktoCV.com";
     private MockMvc restMockMvc;
 
     private static final long OFFER_ID = 1;
