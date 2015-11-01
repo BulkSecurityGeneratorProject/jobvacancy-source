@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 
 public class FieldValidator {
 
-	private static final String REGULAR_EXPRESSION_EMAIL = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@"
-			+ "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,3})$";
+	private static final String REGULAR_EXPRESSION_EMAIL = "^[a-z0-9!#$%&'*+\\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$";
 
 	public static boolean validateEmail(String email) {
 

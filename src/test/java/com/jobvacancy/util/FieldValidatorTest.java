@@ -10,10 +10,10 @@ public class FieldValidatorTest {
 	@Test
 	public void whenVerifyAValidEmailThenResultIsTrue() {
 
-		String[] validEmails = new String[] { "test@example.com", "asd@asd.com.ar", "test-1@example.com",
-				"test.1@yahoo.com", "test1@example.com", "test_1@example.com", "test-1@test.net",
-				"test.1@example.com.au", "test@e.com", "test@1.com", "test@example.com.com", "1@example.com",
-				"test-1@example-test.com" };
+		String[] validEmails = new String[] { "test@example.com", "asd@asd.comun", "test-1@example.com",
+				"test.1@yahoo.com", "test1@example.com.ar", "test_1@example.com", "test-1@test.net",
+				"test.1@example.com", "test@e.com", "test@1.com.ar", "test@example.com", "1@example.com",
+				"test-1@example-test.com","example@te.st.coms.ar.c" };
 
 		for (String validEmail : validEmails) {
 			boolean isValid = FieldValidator.validateEmail(validEmail);
@@ -24,9 +24,9 @@ public class FieldValidatorTest {
 	@Test
 	public void whenVerifyAInvalidEmailThenResultIsFalse() {
 
-		String[] invalidEmails = new String[] { "example", "", "example@.com.com", "exampel1@.com", ".example@test.com",
-				"example**()@test.com", "example@%*.com", "example..1@test.com", "example.@test.com",
-				"test@example_1.com", "example@test@test.com", "example@test.com.a5" };
+		String[] invalidEmails = new String[] { "example", "", "example@.com.com", "exampel1@.com", 
+				"example**()@test.com", "example@%*.com","example.(.1@test.com","test@example_=1.com",
+				"example@test@test.com", "example@&%#$%.c", "example@asd." };
 
 		for (String invalidEmail : invalidEmails) {
 			boolean isValid = FieldValidator.validateEmail(invalidEmail);
