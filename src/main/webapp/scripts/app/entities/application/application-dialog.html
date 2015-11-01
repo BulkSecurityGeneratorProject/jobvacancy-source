@@ -19,7 +19,7 @@
             <input type="text" class="form-control" name="fullname" id="field_fullname"
                     ng-model="jobApplication.fullname"
                     required>
-            <div ng-show="form.fullname.$dirty && form.fullname.$invalid">
+            <div ng-show="form.fullname.$invalid">
                 <p class="help-block"
                     ng-show="form.fullname.$error.required">
                     This field is required.
