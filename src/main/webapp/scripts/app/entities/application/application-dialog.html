@@ -50,13 +50,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="field_cv_link">Link to your CV</label>
-            <input type="text" class="form-control" name="field_cvlink" id="field_cvlink"
+            <label for="field_cvlink">Link to your CV</label>
+            <input type="text" class="form-control" name="cvlink" id="field_cvlink"
                     ng-model="jobApplication.cvlink"
                     required>
-            <div ng-show="form.fullname.$invalid">
+            <div ng-show="form.cvlink.$invalid">
                 <p class="help-block"
-                    ng-show="form.field_cv_link.$error.required">
+                    ng-show="form.cvlink.$error.required">
                     This field is required.
                 </p>
             </div>
