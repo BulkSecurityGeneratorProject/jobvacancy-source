@@ -54,12 +54,12 @@
             <input type="url" class="form-control" name="link" id="field_cvlink"
                     ng-model="jobApplication.cvlink" required>
             <div ng-show="form.link.$invalid">
-             	<p class="help-block"
-                    ng-show="form.link.$invalid" && !form.link.$pristine">
+                <p class="help-block"
+                    ng-show="form.link.$invalid">
                     This field is invalid.
                 </p>
                 <p class="help-block"
-                    ng-show="form.link.$error.required" && !form.link.$pristine">
+                    ng-show="form.link.$error.required">
                     This field is required.
                 </p>
             </div>
