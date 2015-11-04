@@ -51,7 +51,7 @@
         </div>
         <div class="form-group">
             <label for="field_cvlink">Link to your CV</label>
-            <input type="text" class="form-control" name="cvlink" id="field_cvlink"
+            <input type="url" class="form-control" name="cvlink" id="field_cvlink"
                     ng-model="jobApplication.cvlink"
                     required>
             <div ng-show="form.cvlink.$invalid">
@@ -61,6 +61,23 @@
                 </p>
             </div>
         </div>
+        
+        
+          <h4>Upload on file select</h4>
+  <button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+      Select File</button>
+  <br><br>
+  File:
+  <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+      <span class="progress" ng-show="f.progress >= 0">
+          <div style="width:{{f.progress}}%"  
+               ng-bind="f.progress + '%'"></div>
+      </span>
+  </div>     
+  {{errorMsg}}
+        
+        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
