@@ -23,8 +23,8 @@ public class FieldValidator {
 	}
 
 	public static boolean validateUrl(String url) {
-		Pattern urlPattern = Pattern.compile(REGULAR_EXPRESION_URL,	Pattern.CASE_INSENSITIVE);
 		
+		Pattern urlPattern = Pattern.compile(REGULAR_EXPRESION_URL,	Pattern.CASE_INSENSITIVE);
 		
 		if(url != null){
 			Matcher matcher = urlPattern.matcher(url);

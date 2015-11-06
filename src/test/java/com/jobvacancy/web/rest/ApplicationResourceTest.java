@@ -90,7 +90,6 @@ public class ApplicationResourceTest {
         dto.setCVLink(APPLICANT_CV_LINK);
         dto.setOfferId(OFFER_ID);
 
-        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
         doNothing().when(mailService).sendApplication(dto, offer);
 
         restMockMvc.perform(post("/api/Application")
@@ -108,7 +107,6 @@ public class ApplicationResourceTest {
         dto.setCVLink(APPLICANT_CV_LINK);
         dto.setOfferId(OFFER_ID);
 
-        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
         doNothing().when(mailService).sendApplication(dto, offer);
 
         restMockMvc.perform(post("/api/Application")
@@ -126,7 +124,6 @@ public class ApplicationResourceTest {
         dto.setCVLink(null);
         dto.setOfferId(OFFER_ID);
 
-        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
         doNothing().when(mailService).sendApplication(dto, offer);
 
         restMockMvc.perform(post("/api/Application")
@@ -144,7 +141,6 @@ public class ApplicationResourceTest {
         dto.setCVLink(APPLICANT_CV_LINK);
         dto.setOfferId(OFFER_ID);
 
-        //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
         doNothing().when(mailService).sendApplication(dto, offer);
 
         restMockMvc.perform(post("/api/Application")
@@ -152,9 +148,6 @@ public class ApplicationResourceTest {
             .content(TestUtil.convertObjectToJsonBytes(dto)))
                 .andExpect(status().isAccepted());
 
-//        Mockito.verify(mailService).sendApplication(dto, offer);
-        //StrictAssertions.assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
-        //StrictAssertions.assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
 }

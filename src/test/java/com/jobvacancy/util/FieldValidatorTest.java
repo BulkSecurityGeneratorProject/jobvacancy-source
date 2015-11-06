@@ -12,7 +12,7 @@ public class FieldValidatorTest {
 
 		String[] validEmails = new String[] { "test@example.com", "asd@asd.comun", "test-1@example.com",
 				"test.1@yahoo.com", "test1@example.com.ar", "test_1@example.com", "test-1@test.net",
-				"test.1@example.com", "test@e.com", "test@1.com.ar", "test@example.com", "1@example.com",
+				"test.1@example.com", "test@e.com", "test@1.com.ar", "test@example.com.ar", "1@example.com",
 				"test-1@example-test.com","example@te.st.coms.ar.c" };
 
 		for (String validEmail : validEmails) {
