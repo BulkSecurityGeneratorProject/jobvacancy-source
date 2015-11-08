@@ -59,7 +59,6 @@ public class JobApplicationResource {
     }
 
 	private void updateApplicantCounter(JobOffer jobOffer) {
-		jobOffer.getNumberApplicants();
 		jobOffer.addApplicants();
         jobOfferRepository.save(jobOffer);
 	}
