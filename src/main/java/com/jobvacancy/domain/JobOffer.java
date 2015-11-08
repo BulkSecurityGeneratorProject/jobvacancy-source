@@ -37,11 +37,22 @@ public class JobOffer implements Serializable {
     
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "number_applicants")
+    private int numberApplicants;
 
     @ManyToOne
     private User owner;
+    
+    public int getNumberApplicants() {
+		return numberApplicants;
+	}
 
-    public Long getId() {
+	public void setNumberApplicants(int numberApplicants) {
+		this.numberApplicants = numberApplicants;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -111,4 +122,8 @@ public class JobOffer implements Serializable {
                 ", description='" + description + "'" +
                 '}';
     }
+
+	public void addApplicants() {
+		this.numberApplicants ++;
+	}
 }

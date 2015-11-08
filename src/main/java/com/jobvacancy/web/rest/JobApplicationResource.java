@@ -51,10 +51,18 @@ public class JobApplicationResource {
         }
         JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
         this.mailService.sendApplication(jobApplication, jobOffer);
-
+        
+        updateApplicantCounter(jobOffer);
+        
         return ResponseEntity.accepted()
             .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
     }
+
+	private void updateApplicantCounter(JobOffer jobOffer) {
+		jobOffer.getNumberApplicants();
+		jobOffer.addApplicants();
+        jobOfferRepository.save(jobOffer);
+	}
 
 	private boolean validateUrl(JobApplicationDTO jobApplication) {
 		return !FieldValidator.validateUrl(jobApplication.getCVLink());

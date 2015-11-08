@@ -25,6 +25,9 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="number_applicants" type="integer">
+                <constraints nullable="false" />
+            </column>
             <column name="location" type="varchar(255)"/>
             <column name="description" type="varchar(255)"/>
             <column name="owner_id" type="bigint"/>

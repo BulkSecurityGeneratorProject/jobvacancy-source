@@ -5,6 +5,9 @@ package com.jobvacancy.web.rest.dto;
  */
 public class JobApplicationDTO {
     private Long offerId;
+    private String fullname;
+    private String email;
+    private String cvLink;
 
     public Long getOfferId() {
         return offerId;
@@ -21,9 +24,7 @@ public class JobApplicationDTO {
     public void setFullname(String fullname) {
         this.fullname = fullname;
     }
-
-    private String fullname;
-
+    
     public String getEmail() {
         return email;
     }
@@ -31,8 +32,6 @@ public class JobApplicationDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    private String email;
     
     public String getCVLink() {
         return cvLink;
@@ -42,5 +41,4 @@ public class JobApplicationDTO {
         this.cvLink = cvLink;
     }
 
-    private String cvLink;
 }
