@@ -58,8 +58,8 @@ public class MailService {
     @Async
     public void sendApplication(JobApplicationDTO application, JobOffer offer) {
         this.sendEmail(offer.getOwner().getEmail(),
-            "[JobVacancy] New candidate",
-            "Hi, " + application.getEmail() + " applied for your offer: " + offer.getTitle() + ". Link to CV: " + application.getCVLink(),
+            "[JobVacancy] New candidate "+application.getFullname()+" ("+application.getEmail()+")" ,
+            "Hi, " + application.getFullname() + " applied for your offer: " + offer.getTitle() + ". Link to CV: " + application.getCVLink(),
             false,
             false);
     }
