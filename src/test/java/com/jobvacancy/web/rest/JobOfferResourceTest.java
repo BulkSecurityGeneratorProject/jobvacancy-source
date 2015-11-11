@@ -64,6 +64,7 @@ public class JobOfferResourceTest {
     private static final String UPDATED_LOCATION = "UPDATED_TEXT";
     private static final String DEFAULT_DESCRIPTION = "SAMPLE_TEXT";
     private static final String UPDATED_DESCRIPTION = "UPDATED_TEXT";
+    private static final int DEFAULT_APPLICATIONS = 0;
 
     @SuppressWarnings("unused")
 	@Inject
@@ -153,6 +154,7 @@ public class JobOfferResourceTest {
         assertThat(testJobOffer.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testJobOffer.getNumberApplicants()).isEqualTo(DEFAULT_APPLICATIONS);
     }
 
     @Test
