@@ -45,6 +45,7 @@ public class ApplicationResourceTest {
 	private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
     private static final String APPLICANT_CV_LINK = "http://www.linktoCV.com";
+    private static final String APPLICANT_BAD_CV_LINK = "linktoCV.com";
     private MockMvc restMockMvc;
 
     private static final long OFFER_ID = 1;
@@ -122,6 +123,23 @@ public class ApplicationResourceTest {
         dto.setEmail(APPLICANT_EMAIL);
         dto.setFullname(APPLICANT_FULLNAME);
         dto.setCVLink(null);
+        dto.setOfferId(OFFER_ID);
+
+        doNothing().when(mailService).sendApplication(dto, offer);
+
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    @Transactional
+    public void createJobApplicationWithBadCVLinkl() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(APPLICANT_BAD_EMAIL);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setCVLink(APPLICANT_BAD_CV_LINK);
         dto.setOfferId(OFFER_ID);
 
         doNothing().when(mailService).sendApplication(dto, offer);
