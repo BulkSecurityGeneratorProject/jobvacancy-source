@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,7 @@ public class JobOfferResourceTest {
     private static final String DEFAULT_DESCRIPTION = "SAMPLE_TEXT";
     private static final String UPDATED_DESCRIPTION = "UPDATED_TEXT";
     private static final int DEFAULT_APPLICATIONS = 0;
+    private Date expirationDate;
 
     @SuppressWarnings("unused")
 	@Inject
@@ -112,9 +115,21 @@ public class JobOfferResourceTest {
         jobOffer.setTitle(DEFAULT_TITLE);
         jobOffer.setLocation(DEFAULT_LOCATION);
         jobOffer.setDescription(DEFAULT_DESCRIPTION);
+        
+        expirationDate = obtainTomorrowDate();
+        
+        jobOffer.setExpirationDate(expirationDate);
     }
 
-    public static class MockSecurityContext implements SecurityContext {
+    private Date obtainTomorrowDate() {
+    	
+    	  Calendar calendar = Calendar.getInstance();
+    	  calendar.setTime(new Date()); 
+    	  calendar.add(Calendar.DAY_OF_YEAR, 1); 
+    	  return calendar.getTime();
+    }
+
+	public static class MockSecurityContext implements SecurityContext {
 
         private static final long serialVersionUID = -1386535243513362694L;
 
@@ -155,6 +170,7 @@ public class JobOfferResourceTest {
         assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testJobOffer.getNumberApplicants()).isEqualTo(DEFAULT_APPLICATIONS);
+        assertThat(testJobOffer.getExpirationDate()).isEqualTo(expirationDate);
     }
 
     @Test

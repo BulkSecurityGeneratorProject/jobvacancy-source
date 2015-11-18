@@ -1,6 +1,7 @@
 package com.jobvacancy.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -40,11 +41,22 @@ public class JobOffer implements Serializable {
     
     @Column(name = "number_applicants")
     private int numberApplicants;
+    
+    @Column(name = "expiration_date")
+    private Date expirationDate;
 
     @ManyToOne
     private User owner;
     
-    public int getNumberApplicants() {
+    public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
+	public int getNumberApplicants() {
 		return numberApplicants;
 	}
 
