@@ -41,12 +41,12 @@
         <div class="form-group">
             <label for="field_date">Available until</label>
             <p> Please insert the date as dd/mm/yyyy </p>
-                <input name="expirationDate" id="field_date" type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="jobOffer.startDate"
+                <input name="expirationDate" id="field_date" type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="jobOffer.expirationDate"
                        is-open="status.opened" datepicker-options="dateOptions" close-text="Close"
                        date-disabled="disabled(date, mode)"/>
-            <div ng-show="editForm.date.$invalid">
+            <div ng-show="editForm.expirationDate.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.date.$error.required">
+                    ng-show="editForm.expirationDate.$error.required">
                     This field is required.
                 </p>
             </div>
