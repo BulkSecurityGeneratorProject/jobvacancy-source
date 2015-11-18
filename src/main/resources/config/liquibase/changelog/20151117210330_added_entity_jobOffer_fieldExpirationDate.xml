@@ -6,7 +6,7 @@
 
 	<changeSet author="jhipster" id="addColumn">
     	<addColumn tableName="JOB_OFFER">
-    		<column name="expiration_date" type="time">
+    		<column name="expiration_date" type="timestamp">
                 <constraints nullable="false" />
             </column>
     	</addColumn>

@@ -32,10 +32,6 @@ angular.module('jobvacancyApp').controller('JobOfferDialogController',
             $modalInstance.dismiss('cancel');
         };
         
-        $scope.today = function () {
-            $scope.jobOffer.startDate = new Date();
-        };
-        $scope.today();
         $scope.open = function($event) {
             $scope.status.opened = true;
         };

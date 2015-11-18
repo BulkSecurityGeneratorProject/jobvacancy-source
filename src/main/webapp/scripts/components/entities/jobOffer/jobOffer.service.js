@@ -8,6 +8,7 @@ angular.module('jobvacancyApp')
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
+                    data.expirationDate = new Date(data.expirationDate);
                     return data;
                 }
             },
