@@ -19,6 +19,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
+
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
@@ -57,9 +59,10 @@ public class MailService {
 
     @Async
     public void sendApplication(JobApplicationDTO application, JobOffer offer) {
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         this.sendEmail(offer.getOwner().getEmail(),
             "[JobVacancy] New candidate "+application.getFullname()+" ("+application.getEmail()+")" ,
-            "Hi, " + application.getFullname() + " applied for your offer: " + offer.getTitle() + ". Link to CV: " + application.getCVLink(),
+            "Hi, " + application.getFullname() + " applied for your offer: " + offer.getTitle() + ". Expiration date: " + dateFormat.format(offer.getExpirationDate()) + ". Link to CV: " + application.getCVLink(),
             false,
             false);
     }
