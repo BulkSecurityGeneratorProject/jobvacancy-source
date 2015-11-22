@@ -32,6 +32,14 @@ angular.module('jobvacancyApp').controller('JobOfferDialogController',
             $modalInstance.dismiss('cancel');
         };
         
+        $scope.today = function () {
+            $scope.jobOffer.expirationDate = new Date();
+        };
+        
+        $scope.today();
+        
+        $scope.today =new Date().toISOString();
+        
         $scope.open = function($event) {
             $scope.status.opened = true;
         };

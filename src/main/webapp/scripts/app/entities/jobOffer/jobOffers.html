@@ -56,7 +56,7 @@
                     <td>{{jobOffer.location}}</td>
                     <td>{{jobOffer.description}}</td>
                     <td>{{jobOffer.numberApplicants}}</td>
-                    <td>{{jobOffer.expirationDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{jobOffer.expirationDate | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="jobOffer.detail({id:jobOffer.id})"
