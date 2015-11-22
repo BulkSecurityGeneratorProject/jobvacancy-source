@@ -21,6 +21,7 @@ import com.jobvacancy.domain.util.FieldValidator;
 import com.jobvacancy.repository.JobOfferRepository;
 import com.jobvacancy.service.MailService;
 import com.jobvacancy.web.rest.dto.JobApplicationDTO;
+import com.jobvacancy.web.rest.exceptions.CreateJobApplicationException;
 import com.jobvacancy.web.rest.util.HeaderUtil;
 
 @RestController
@@ -45,12 +46,11 @@ public class JobApplicationResource {
     @Timed
     public ResponseEntity<?> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException, ParseException {
         log.debug("REST request to save JobApplication : {}", jobApplication);
-        if(validateEmail(jobApplication)){
-        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Invalid e-mail");
-        }
-        if(validateUrl(jobApplication)){
-        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Blank CV Link");
-        }
+        try {
+			validateFields(jobApplication);
+		} catch (CreateJobApplicationException e) {
+			return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body(e.getMessage());
+		}
         JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
         this.mailService.sendApplication(jobApplication, jobOffer);
         
@@ -59,6 +59,15 @@ public class JobApplicationResource {
         return ResponseEntity.accepted()
             .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
     }
+
+	private void validateFields(JobApplicationDTO jobApplication) throws CreateJobApplicationException {
+		if(validateEmail(jobApplication)){
+			throw new CreateJobApplicationException("Invalid e-mail");
+        }
+        if(validateUrl(jobApplication)){
+        	throw new CreateJobApplicationException("CV Link is required");
+        }
+	}
 
 	private void updateApplicantCounter(JobOffer jobOffer) {
 		jobOffer.addApplicants();

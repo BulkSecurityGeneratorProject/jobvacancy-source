@@ -34,6 +34,7 @@ import com.jobvacancy.domain.User;
 import com.jobvacancy.repository.JobOfferRepository;
 import com.jobvacancy.repository.UserRepository;
 import com.jobvacancy.security.SecurityUtils;
+import com.jobvacancy.web.rest.exceptions.CreateJobApplicationException;
 import com.jobvacancy.web.rest.util.HeaderUtil;
 import com.jobvacancy.web.rest.util.PaginationUtil;
 
@@ -62,21 +63,11 @@ public class JobOfferResource {
     @Timed
     public ResponseEntity<?> createJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException, ParseException {
         log.debug("REST request to save JobOffer : {}", jobOffer);
-        if (jobOffer.getId() != null) {
-        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("A new jobOffer cannot already have an ID");
-        }
-        
-        if(jobOffer.getExpirationDate() == null){
-        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Expiration date is required");
-        }
-        
-        Date expirationDate = formatterDate(jobOffer.getExpirationDate());
-        Date todayDate = formatterDate(new Date());
-        
-        if(expirationDate.before(todayDate)){
-        	
-        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Expiration date need be greater or equal than today date");
-        }
+        try {
+			validateFields(jobOffer);
+		} catch (CreateJobApplicationException e) {
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body(e.getMessage());
+		}
         
         String currentLogin = SecurityUtils.getCurrentLogin();
         Optional<User> currentUser = userRepository.findOneByLogin(currentLogin);
@@ -87,6 +78,24 @@ public class JobOfferResource {
                 .headers(HeaderUtil.createEntityCreationAlert("jobOffer", result.getId().toString()))
                 .body(result);
     }
+
+	private void validateFields(JobOffer jobOffer) throws ParseException, CreateJobApplicationException {
+		if (jobOffer.getId() != null) {
+        	throw new CreateJobApplicationException("A new jobOffer cannot already have an ID");
+        }
+        
+        if(jobOffer.getExpirationDate() == null){
+        	throw new CreateJobApplicationException("Expiration date is required");
+        }
+        
+        Date expirationDate = formatterDate(jobOffer.getExpirationDate());
+        Date todayDate = formatterDate(new Date());
+        
+        if(expirationDate.before(todayDate)){
+        	
+        	throw new CreateJobApplicationException("Expiration date need be greater or equal than today date");
+        }
+	}
     
     private Date formatterDate(Date date) throws ParseException {
     	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
