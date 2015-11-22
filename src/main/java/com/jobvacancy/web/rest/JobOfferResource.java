@@ -1,13 +1,18 @@
 package com.jobvacancy.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.jobvacancy.domain.JobOffer;
-import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.JobOfferRepository;
-import com.jobvacancy.repository.UserRepository;
-import com.jobvacancy.security.SecurityUtils;
-import com.jobvacancy.web.rest.util.HeaderUtil;
-import com.jobvacancy.web.rest.util.PaginationUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,15 +22,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+import com.jobvacancy.domain.JobOffer;
+import com.jobvacancy.domain.User;
+import com.jobvacancy.repository.JobOfferRepository;
+import com.jobvacancy.repository.UserRepository;
+import com.jobvacancy.security.SecurityUtils;
+import com.jobvacancy.web.rest.util.HeaderUtil;
+import com.jobvacancy.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing JobOffer.
@@ -44,19 +54,28 @@ public class JobOfferResource {
 
     /**
      * POST  /jobOffers -> Create a new jobOffer.
+     * @throws ParseException 
      */
     @RequestMapping(value = "/jobOffers",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<JobOffer> createJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException {
+    public ResponseEntity<?> createJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException, ParseException {
         log.debug("REST request to save JobOffer : {}", jobOffer);
         if (jobOffer.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new jobOffer cannot already have an ID").body(null);
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("A new jobOffer cannot already have an ID");
         }
         
         if(jobOffer.getExpirationDate() == null){
-        	return ResponseEntity.badRequest().header("Failure", "Expiration date y required").body(null);
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Expiration date is required");
+        }
+        
+        Date expirationDate = formatterDate(jobOffer.getExpirationDate());
+        Date todayDate = formatterDate(new Date());
+        
+        if(expirationDate.before(todayDate)){
+        	
+        	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Expiration date need be greater or equal than today date");
         }
         
         String currentLogin = SecurityUtils.getCurrentLogin();
@@ -68,15 +87,23 @@ public class JobOfferResource {
                 .headers(HeaderUtil.createEntityCreationAlert("jobOffer", result.getId().toString()))
                 .body(result);
     }
+    
+    private Date formatterDate(Date date) throws ParseException {
+    	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    	String expirationDate = formatter.format(date);
+    	
+		return formatter.parse(expirationDate);
+	}
 
     /**
      * PUT  /jobOffers -> Updates an existing jobOffer.
+     * @throws ParseException 
      */
     @RequestMapping(value = "/jobOffers",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<JobOffer> updateJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException {
+    public ResponseEntity<?> updateJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException, ParseException {
         log.debug("REST request to update JobOffer : {}", jobOffer);
         if (jobOffer.getId() == null) {
             return createJobOffer(jobOffer);

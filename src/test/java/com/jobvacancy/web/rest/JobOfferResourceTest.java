@@ -149,6 +149,35 @@ public class JobOfferResourceTest {
             this.authentication = authentication;
         }
     }
+	
+	@Test
+	@Transactional
+	public void whenCreateJobOfferWithoutExpirationDateThenResultIsBadRequest() throws Exception {
+		jobOffer.setExpirationDate(null);
+		// Create the JobOffer
+		
+		restJobOfferMockMvc.perform(post("/api/jobOffers")
+				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(jobOffer)))
+		.andExpect(status().isBadRequest());
+	}
+	
+	
+	@Test
+	@Transactional
+	public void whenCreateJobOfferWithExpirationDateLessThanActualDateThenResultIsBadRequest() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date()); 
+		calendar.add(Calendar.DAY_OF_YEAR, -3);
+		
+		jobOffer.setExpirationDate(calendar.getTime());
+		// Create the JobOffer
+		
+		restJobOfferMockMvc.perform(post("/api/jobOffers")
+				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(jobOffer)))
+		.andExpect(status().isBadRequest());
+	}
 
     @Test
     @Transactional

@@ -1,6 +1,7 @@
 package com.jobvacancy.web.rest;
 
 import java.net.URISyntaxException;
+import java.text.ParseException;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -36,12 +37,13 @@ public class JobApplicationResource {
 
     /**
      * POST  /Application -> Create a new jobOffer.
+     * @throws ParseException 
      */
     @RequestMapping(value = "/Application",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
+    public ResponseEntity<?> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException, ParseException {
         log.debug("REST request to save JobApplication : {}", jobApplication);
         if(validateEmail(jobApplication)){
         	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Invalid e-mail");
