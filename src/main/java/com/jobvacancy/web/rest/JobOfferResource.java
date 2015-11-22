@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -73,7 +75,7 @@ public class JobOfferResource {
         Date expirationDate = formatterDate(jobOffer.getExpirationDate());
         Date todayDate = formatterDate(new Date());
         
-        if(expirationDate.before(todayDate)){
+        if(expirationDateIsLessThanTodayDate(expirationDate, todayDate)){
         	
         	return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body("Expiration date need be greater or equal than today date");
         }
@@ -87,6 +89,10 @@ public class JobOfferResource {
                 .headers(HeaderUtil.createEntityCreationAlert("jobOffer", result.getId().toString()))
                 .body(result);
     }
+
+	private boolean expirationDateIsLessThanTodayDate(Date expirationDate, Date todayDate) {
+		return expirationDate.before(todayDate);
+	}
     
     private Date formatterDate(Date date) throws ParseException {
     	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -116,6 +122,7 @@ public class JobOfferResource {
 
     /**
      * GET  /jobOffers -> get all the jobOffers.
+     * @throws ParseException 
      */
 /*
     @RequestMapping(value = "/jobOffers",
@@ -213,11 +220,30 @@ public class JobOfferResource {
                 return list.iterator();
             }
         };
+     
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/jobOffers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    /**
+    private List<JobOffer> dropExpiratedJobs(Page<JobOffer> page) throws ParseException {
+		List<JobOffer> jobOfferFiltered = new ArrayList<JobOffer>();
+		Date todayDate = formatterDate(new Date());
+		Calendar calendar = Calendar.getInstance();
+		
+    	for (JobOffer jobOffer : page.getContent()) {
+    		Date expirationDate = formatterDate(jobOffer.getExpirationDate());
+    		calendar.setTime(expirationDate); 
+    		calendar.add(Calendar.DAY_OF_YEAR, 1); 
+    		
+			if(expirationDateIsLessThanTodayDate(todayDate, calendar.getTime())){
+				jobOfferFiltered.add(jobOffer);
+			}
+		}
+    	
+    	return jobOfferFiltered;
+	}
+
+	/**
      * GET  /jobOffers/:id -> get the "id" jobOffer.
      */
     @RequestMapping(value = "/jobOffers/{id}",
@@ -249,16 +275,18 @@ public class JobOfferResource {
 
     /**
      * GET  /jobOffers -> get all the jobOffers.
+     * @throws ParseException 
      */
     @RequestMapping(value = "/offers",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<JobOffer>> getAllOffers(Pageable pageable)
-            throws URISyntaxException {
+            throws URISyntaxException, ParseException {
         Page<JobOffer> page = jobOfferRepository.findAll(pageable);
+        List<JobOffer> jobOffersFiltered = dropExpiratedJobs(page);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/offers");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(jobOffersFiltered, headers, HttpStatus.OK);
     }
 
 }

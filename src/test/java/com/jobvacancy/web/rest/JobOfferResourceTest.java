@@ -123,10 +123,10 @@ public class JobOfferResourceTest {
 
     private Date obtainTomorrowDate() {
     	
-    	  Calendar calendar = Calendar.getInstance();
-    	  calendar.setTime(new Date()); 
-    	  calendar.add(Calendar.DAY_OF_YEAR, 1); 
-    	  return calendar.getTime();
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.setTime(new Date()); 
+    	calendar.add(Calendar.DAY_OF_YEAR, 1); 
+    	return calendar.getTime();
     }
 
 	public static class MockSecurityContext implements SecurityContext {
