@@ -43,7 +43,7 @@
             <p> Please insert the date as yyyy-mm-dd </p>
                 <input name="expirationDate" id="field_date" type="date" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="jobOffer.expirationDate"
                        is-open="status.opened" datepicker-options="dateOptions" close-text="Close"
-                       date-disabled="disabled(date, mode)" ng-required="true"/>
+                       date-disabled="disabled(date, mode)" ng-required="true min="{{today | date:'yyyy-MM-dd'}}"/>
             <div ng-show="editForm.expirationDate.$invalid">
                 <p class="help-block"
                     ng-show="editForm.expirationDate.$error.required">
